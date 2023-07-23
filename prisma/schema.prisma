@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int              @id @default(autoincrement())
+  fullName       String
+  phone          String           @unique
+  email          String           @unique
+  password       String           @db.Text
+  status         Boolean          @default(true)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  Bootcamp       Bootcamp         @relation(fields: [bootcampId], references: [id])
+  bootcampId     Int
+  News           News[]
+  Recommendation Recommendation[]
+}
+
+model Bootcamp {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User[]
+}
+
+model News {
+  id        Int      @id @default(autoincrement())
+  content   String
+  image     String   @db.Text
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int
+}
+
+model Recommendation {
+  id           Int      @id @default(autoincrement())
+  title        String
+  content      String
+  locationLat  Float
+  locationLong Float
+  status       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  User         User     @relation(fields: [userId], references: [id])
+  userId       Int
+}

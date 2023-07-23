@@ -1,0 +1,819 @@
+openapi: 3.0.3
+info:
+  title: Swagger Noticias
+  description: |-
+    This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
+    Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
+
+    _If you're looking for the Swagger 2.0/OAS 2.0 version of Petstore, then click [here](https://editor.swagger.io/?url=https://petstore.swagger.io/v2/swagger.yaml). Alternatively, you can load via the `Edit > Load Petstore OAS 2.0` menu option!_
+    
+    Some useful links:
+    - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
+    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:3000/api
+tags:
+  - name: auth
+    description: Todo sobre autenticacion
+  - name: bootcamp
+    description: Todo sobre bootcamps
+  - name: news
+    description: Todos sobre noticias
+  - name: recommendation
+    description: Todas sobre recommendaciones
+  - name: user
+    description: Todo sobre usuarios
+paths:
+  /bootcamp/create:
+    post:
+      tags:
+        - bootcamp
+      summary: Crear bootcamp
+      description: Crear un bootcamp
+      operationId: postBootcamp
+      requestBody:
+        description: Crear un nuevo bootcamp
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bootcamp'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bootcamp'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /bootcamp:
+    get:
+      tags:
+        - bootcamp
+      summary: Listar bootcamps
+      description: Listar todos los bootcamps
+      operationId: getBootcamps
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bootcamp'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /bootcamp/{id}:
+    get:
+      tags:
+        - bootcamp
+      summary: Obtener bootcamp
+      description: Obtener bootcamp por ID
+      operationId: getBootcampById
+      parameters:
+        - name: id
+          in: path
+          description: ID de bootcamp
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bootcamp'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - bootcamp
+      summary: Actualizar bootcamp
+      description: Actualizar bootcamp por ID
+      operationId: putBootcampById
+      parameters:
+        - name: id
+          in: path
+          description: ID de bootcamp
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Actualizar un bootcamp por el ID
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bootcamp'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bootcamp'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - bootcamp
+      summary: Eliminar bootcamp
+      description: Eliminar bootcamp por ID
+      operationId: deleteBootcampById
+      parameters:
+        - name: id
+          in: path
+          description: ID de bootcamp
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bootcamp'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /auth/signup:
+    post:
+      tags:
+        - auth
+      summary: Registrar usuario
+      description: Registrar un usuario
+      operationId: signupUser
+      requestBody:
+        description: Registrar un nuevo usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /auth/signin:
+    post:
+      tags:
+        - auth
+      summary: Iniciar sesion
+      description: Iniciar sesion
+      operationId: signinUser
+      requestBody:
+        description: Iniciar sesion
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Signin'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Jwt'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /news/create:
+    post:
+      tags:
+        - news
+      summary: Crear noticia
+      description: Crear una noticia
+      operationId: postNew
+      requestBody:
+        description: Crear una nueva noticia
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/New'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/New'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /news:
+    get:
+      tags:
+        - news
+      summary: Listar noticias
+      description: Listar todas las noticias
+      operationId: getNews
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/New'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /news/{id}:
+    get:
+      tags:
+        - news
+      summary: Obtener noticia
+      description: Obtener noticia por ID
+      operationId: getNewById
+      parameters:
+        - name: id
+          in: path
+          description: ID de noticia
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/New'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - news
+      summary: Actualizar noticia
+      description: Actualizar noticia por ID
+      operationId: putNewById
+      parameters:
+        - name: id
+          in: path
+          description: ID de noticia
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Actualizar un noticia por el ID
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/New'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/New'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - news
+      summary: Eliminar noticia
+      description: Eliminar noticia por ID
+      operationId: deleteNewById
+      parameters:
+        - name: id
+          in: path
+          description: ID de noticia
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/New'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /recommendation/create:
+    post:
+      tags:
+        - recommendation
+      summary: Crear recomendacion
+      description: Crear una recomendacion
+      operationId: postRecommendation
+      requestBody:
+        description: Crear una nueva recomendacion
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recommendation'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recommendation'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /recommendation:
+    get:
+      tags:
+        - recommendation
+      summary: Listar recomendaciones
+      description: Listar todas las recomendaciones
+      operationId: getRecommendation
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recommendation'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /recommendation/{id}:
+    get:
+      tags:
+        - recommendation
+      summary: Obtener recomendacion
+      description: Obtener recomendacion por ID
+      operationId: getRecommendationById
+      parameters:
+        - name: id
+          in: path
+          description: ID de recomendacion
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recommendation'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - recommendation
+      summary: Actualizar recomendacion
+      description: Actualizar recomendacion por ID
+      operationId: putRecommendationById
+      parameters:
+        - name: id
+          in: path
+          description: ID de recomendacion
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Actualizar una recomendacion por el ID
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recommendation'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recommendation'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - recommendation
+      summary: Eliminar recomendacion
+      description: Eliminar recomendacion por ID
+      operationId: deleteRecommendationById
+      parameters:
+        - name: id
+          in: path
+          description: ID de recomendacion
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recommendation'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /user/create:
+    post:
+      tags:
+        - user
+      summary: Crear usuario
+      description: Crear una usuario
+      operationId: postUser
+      requestBody:
+        description: Crear una nueva usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /user:
+    get:
+      tags:
+        - user
+      summary: Listar usuarios
+      description: Listar todos los usuarios
+      operationId: getUsers
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /user/{id}:
+    get:
+      tags:
+        - user
+      summary: Obtener usuario
+      description: Obtener usuario por ID
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          description: ID de usuario
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - user
+      summary: Actualizar usuario
+      description: Actualizar usuario por ID
+      operationId: putUserById
+      parameters:
+        - name: id
+          in: path
+          description: ID de usuario
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Actualizar un usuario por el ID
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - user
+      summary: Eliminar usuario
+      description: Eliminar usuario por ID
+      operationId: deleteUserById
+      parameters:
+        - name: id
+          in: path
+          description: ID de usuario
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Bootcamp:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+          readOnly: true
+        name:
+          type: string
+          example: Bootcamp Desarrollo Web Fullstack G21
+        status:
+          type: boolean
+          example: true
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          example: 2023-07-21T19:42:31.260Z
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2023-07-21T19:42:31.260Z
+          readOnly: true
+    New:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+          readOnly: true
+        content:
+          type: string
+          example: Esta es una noticia
+        image:
+          type: string
+          example: https://image.com/placeholder.png
+        status:
+          type: boolean
+          example: true
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          example: 2023-07-21T19:42:31.260Z
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2023-07-21T19:42:31.260Z
+          readOnly: true
+        userId:
+          type: integer
+          format: int64
+          example: 1
+    Recommendation:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+          readOnly: true
+        title:
+          type: string
+          example: Titulo de la recomendacion
+        content:
+          type: string
+          example: Recomendacion de la recomendacion
+        locationLat:
+          type: number
+          format: float
+          example: -16.3467105
+        locationLong:
+          type: number
+          format: float
+          example: -71.5941851
+        status:
+          type: boolean
+          example: true
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          example: 2023-07-21T19:42:31.260Z
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2023-07-21T19:42:31.260Z
+          readOnly: true
+        userId:
+          type: integer
+          format: int64
+          example: 1
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+          readOnly: true
+        fullName:
+          type: string
+          example: John Doe
+        phone:
+          type: string
+          example: '987654321'
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: '123456'
+        status:
+          type: boolean
+          example: true
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          example: 2023-07-21T19:42:31.260Z
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2023-07-21T19:42:31.260Z
+          readOnly: true
+        bootcampId:
+          type: integer
+          format: int64
+          example: 1
+    Signin:
+      type: object
+      properties:
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: '123456'
+    Jwt:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Descripcion del mensaje
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Authorization
+      in: header
