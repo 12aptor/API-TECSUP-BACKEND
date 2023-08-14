@@ -5,8 +5,17 @@ import { News } from "@prisma/client";
 export const createNew = async (_req: Request, res: Response) => {
   try {
     const body: News = _req.body;
+    const file = _req.file;
+    if (!file) {
+      return res.status(400).json({ message: "Image is required" });
+    }
+
     const _new = await prisma.news.create({
-      data: body,
+      data: {
+        content: body.content,
+        userId: Number(body.userId),
+        image: "/files/" + file.filename,
+      },
     });
     res.status(201).json(_new);
   } catch (error) {
@@ -19,7 +28,15 @@ export const createNew = async (_req: Request, res: Response) => {
 export const getNews = async (_req: Request, res: Response) => {
   try {
     const news = await prisma.news.findMany();
-    res.status(201).json(news);
+    const url = _req.protocol + "://" + _req.get("host");
+    const newsWithcompleteUrl = news.map((n) => {
+      return {
+        ...n,
+        image: url + n.image,
+      };
+    });
+
+    res.status(201).json(newsWithcompleteUrl);
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });

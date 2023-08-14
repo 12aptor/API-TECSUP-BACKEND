@@ -60,6 +60,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
   /bootcamp:
     get:
       tags:
@@ -82,6 +84,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
   /bootcamp/{id}:
     get:
       tags:
@@ -115,6 +119,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
     put:
       tags:
         - bootcamp
@@ -147,6 +153,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
     delete:
       tags:
         - bootcamp
@@ -173,6 +181,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
   /auth/signup:
     post:
       tags:
@@ -245,11 +255,19 @@ paths:
       description: Crear una noticia
       operationId: postNew
       requestBody:
-        description: Crear una nueva noticia
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: '#/components/schemas/New'
+              type: object
+              properties:
+                content:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+                userId:
+                  type: integer
+                  format: int64
       responses:
         '201':
           description: Successful operation
@@ -257,12 +275,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/New'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
   /news:
     get:
       tags:
@@ -285,6 +311,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
   /news/{id}:
     get:
       tags:
@@ -318,6 +346,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
     put:
       tags:
         - news
@@ -350,6 +380,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
     delete:
       tags:
         - news
@@ -376,6 +408,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
   /recommendation/create:
     post:
       tags:
@@ -402,6 +436,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
   /recommendation:
     get:
       tags:
@@ -424,6 +460,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
   /recommendation/{id}:
     get:
       tags:
@@ -457,6 +495,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
     put:
       tags:
         - recommendation
@@ -489,6 +529,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
     delete:
       tags:
         - recommendation
@@ -515,6 +557,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
   /user/create:
     post:
       tags:
@@ -541,6 +585,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
   /user:
     get:
       tags:
@@ -563,6 +609,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
   /user/{id}:
     get:
       tags:
@@ -596,6 +644,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
     put:
       tags:
         - user
@@ -628,6 +678,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
     delete:
       tags:
         - user
@@ -654,6 +706,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+        - bearerToken: []
 components:
   schemas:
     Bootcamp:
@@ -806,6 +860,12 @@ components:
         accessToken:
           type: string
           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+    BadRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Descripcion del mensaje
     Error:
       type: object
       properties:
@@ -813,7 +873,7 @@ components:
           type: string
           example: Descripcion del mensaje
   securitySchemes:
-    api_key:
+    bearerToken:
       type: apiKey
       name: Authorization
       in: header

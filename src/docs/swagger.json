@@ -84,7 +84,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       }
     },
     "/bootcamp": {
@@ -119,7 +124,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       }
     },
     "/bootcamp/{id}": {
@@ -172,7 +182,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -223,7 +238,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -264,7 +284,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       }
     },
     "/auth/signup": {
@@ -380,11 +405,23 @@
         "description": "Crear una noticia",
         "operationId": "postNew",
         "requestBody": {
-          "description": "Crear una nueva noticia",
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/New"
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "userId": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
               }
             }
           }
@@ -400,6 +437,16 @@
               }
             }
           },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal server error",
             "content": {
@@ -410,7 +457,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       }
     },
     "/news": {
@@ -445,7 +497,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       }
     },
     "/news/{id}": {
@@ -498,7 +555,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -549,7 +611,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -590,7 +657,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       }
     },
     "/recommendation/create": {
@@ -632,7 +704,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       }
     },
     "/recommendation": {
@@ -667,7 +744,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       }
     },
     "/recommendation/{id}": {
@@ -720,7 +802,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -771,7 +858,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -812,7 +904,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       }
     },
     "/user/create": {
@@ -854,7 +951,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       }
     },
     "/user": {
@@ -889,7 +991,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       }
     },
     "/user/{id}": {
@@ -942,7 +1049,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -993,7 +1105,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -1034,7 +1151,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerToken": []
+          }
+        ]
       }
     }
   },
@@ -1235,6 +1357,15 @@
           }
         }
       },
+      "BadRequest": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Descripcion del mensaje"
+          }
+        }
+      },
       "Error": {
         "type": "object",
         "properties": {
@@ -1246,7 +1377,7 @@
       }
     },
     "securitySchemes": {
-      "api_key": {
+      "bearerToken": {
         "type": "apiKey",
         "name": "Authorization",
         "in": "header"
