@@ -22,5 +22,5 @@ const upload = multer({ storage: storage });
 newsRouter.post("/news/create", upload.single("image"), controller.createNew);
 newsRouter.get("/news", controller.getNews);
 newsRouter.get("/news/:id", controller.getNew);
-newsRouter.put("/news/:id", controller.updateNew);
+newsRouter.put("/news/:id", upload.single("image"), controller.updateNew);
 newsRouter.delete("/news/:id", controller.deleteNew);

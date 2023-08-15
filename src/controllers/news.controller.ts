@@ -17,7 +17,10 @@ export const createNew = async (_req: Request, res: Response) => {
         image: "/files/" + file.filename,
       },
     });
-    res.status(201).json(_new);
+    res.status(201).json({
+      ..._new,
+      image: _req.protocol + "://" + _req.get("host") + _new.image,
+    });
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });
@@ -68,13 +71,37 @@ export const updateNew = async (_req: Request, res: Response) => {
   try {
     const body: News = _req.body;
     const params = _req.params;
+    const file = _req.file;
+    if (!file) {
+      const _new = await prisma.news.update({
+        where: {
+          id: Number(params.id),
+        },
+        data: {
+          content: body.content,
+          userId: Number(body.userId),
+        },
+      });
+      return res.status(201).json({
+        ..._new,
+        image: _req.protocol + "://" + _req.get("host") + _new.image,
+      });
+    }
+
     const _new = await prisma.news.update({
       where: {
         id: Number(params.id),
       },
-      data: body,
+      data: {
+        content: body.content,
+        userId: Number(body.userId),
+        image: "/files/" + file.filename,
+      },
     });
-    res.status(201).json(_new);
+    return res.status(201).json({
+      ..._new,
+      image: _req.protocol + "://" + _req.get("host") + _new.image,
+    });
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });

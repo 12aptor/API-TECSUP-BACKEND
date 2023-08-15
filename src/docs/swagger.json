@@ -19,6 +19,9 @@
   },
   "servers": [
     {
+      "url": "http://68.183.116.214:3000/api"
+    },
+    {
       "url": "http://localhost:3000/api"
     }
   ],
@@ -581,11 +584,23 @@
           }
         ],
         "requestBody": {
-          "description": "Actualizar un noticia por el ID",
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/New"
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "userId": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
               }
             }
           }
