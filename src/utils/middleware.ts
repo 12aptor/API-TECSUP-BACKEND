@@ -9,13 +9,13 @@ export const isAuthorized = (
   const authorization = _req.headers.authorization;
   const jwt = authorization?.split(" ")[1];
   if (!jwt) {
-    return res.status(400).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
   const secret = new TextEncoder().encode(process.env.SECRET_JWT || "");
   const isTokenValid = jose.jwtVerify(jwt, secret);
   if (!isTokenValid) {
-    return res.status(400).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized" });
   }
   return next();
 };
