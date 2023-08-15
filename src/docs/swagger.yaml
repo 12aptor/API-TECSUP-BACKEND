@@ -61,8 +61,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-        - bearerToken: []
   /bootcamp:
     get:
       tags:
@@ -85,8 +83,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-        - bearerToken: []
   /bootcamp/{id}:
     get:
       tags:
@@ -120,8 +116,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-        - bearerToken: []
     put:
       tags:
         - bootcamp
@@ -154,8 +148,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-        - bearerToken: []
     delete:
       tags:
         - bootcamp
@@ -182,8 +174,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      security:
-        - bearerToken: []
   /auth/signup:
     post:
       tags:

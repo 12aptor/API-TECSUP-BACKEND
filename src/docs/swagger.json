@@ -87,12 +87,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "bearerToken": []
-          }
-        ]
+        }
       }
     },
     "/bootcamp": {
@@ -127,12 +122,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "bearerToken": []
-          }
-        ]
+        }
       }
     },
     "/bootcamp/{id}": {
@@ -185,12 +175,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "bearerToken": []
-          }
-        ]
+        }
       },
       "put": {
         "tags": [
@@ -241,12 +226,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "bearerToken": []
-          }
-        ]
+        }
       },
       "delete": {
         "tags": [
@@ -287,12 +267,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "bearerToken": []
-          }
-        ]
+        }
       }
     },
     "/auth/signup": {
