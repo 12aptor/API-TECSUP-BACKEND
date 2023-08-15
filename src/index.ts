@@ -23,7 +23,7 @@ app.use(cors());
 app.get("/", redirect);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api", authRouter);
-app.use("/api", isAuthorized, bootcampRouter);
+app.use("/api", bootcampRouter);
 app.use("/api", isAuthorized, newsRouter);
 app.use("/api", isAuthorized, recommendationRouter);
 app.use("/api", isAuthorized, userRouter);
